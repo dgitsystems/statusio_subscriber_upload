@@ -1,9 +1,11 @@
 package main
 
 import (
+	"encoding/csv"
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/statusio/statusio-go"
 )
@@ -37,11 +39,32 @@ func main() {
 	// Check for filename being given on command line
 	// TODO
 
+	fileName := "example_subscriber_list.txt"
+
 	// Ensure file is present and readable
-	// TODO
+	info, err := os.Stat(fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if !info.Mode().IsRegular() {
+		log.Fatal("File isn't a regular file")
+	}
 
 	// Read the file into memory
-	// TODO
+	tmpFile, err := os.Open(fileName)
+	if err != nil {
+		return
+	}
+	defer tmpFile.Close()
+	r := csv.NewReader(tmpFile)
+	lines, err := r.ReadAll()
+	if err != nil {
+		return
+	}
+	addList := make(map[string]struct{})
+	for _, field := range lines {
+		addList[field[0]] = struct{}{}
+	}
 
 	// Establish connection to status.io
 	api := statusio.NewStatusioApi(apiId, apiKey)
@@ -61,12 +84,26 @@ func main() {
 	}
 
 	// Remove any existing subscribers from the list of people to add
-	// TODO
+	for _, email := range subList.Result.Email {
+		if _, ok := addList[email.Address]; ok {
+			delete(addList, email.Address)
+		}
+	}
 
-	// Loop through the list of new subscribers to add, adding them
-	// TODO
+	// Add the new subscribers
+	for email := range addList {
+		addInfo := statusio.Subscriber{
+			StatuspageID: statusPageId,
+			Method:       "email",
+			Address:      email,
+		}
+		_, err := api.SubscriberAdd(addInfo)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	// Ensure there is at least a 1 second pause between subscriber add calls, so we don't hit rate limits
-	// This is what the status.io docs say to do (really)
-	// TODO
+		// Ensure there is at least a 1 second pause between subscriber add calls, so we don't hit rate limits
+		// This is what the status.io docs say to do (really)
+		time.Sleep(1100 * time.Millisecond) // Use 1.1 seconds, for that little bit extra safety
+	}
 }
