@@ -4,15 +4,19 @@ A simple cli tool to bulk upload a list of email subscribers from a file.
 
 The file format is 1 email address per line.  eg:
 
+```
 foo@example.com
 bar@example.org
 baz@example.net
+```
 
 It does _not_ handle the common approach of adding extra info on the line. eg:
 
+```
 "Foo Nurk" <foo@example.com>
 "Bar Nurk" <bar@example.org>
 "Baz Nurk" <baz@example.net>
+```
 
 So, keep it simple.
 
