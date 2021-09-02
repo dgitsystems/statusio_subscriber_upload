@@ -31,5 +31,5 @@ To use this utility, set environment variables for the main status page values:
 Then call this utility with a filename as the first command line argument. eg:
 
 ```
-$ API_ID=abc API_KEY=def STATUS_PAGE_ID=ghi ./statusio_metrics_updater subscriber_list.txt
+$ API_ID=abc API_KEY=def STATUS_PAGE_ID=ghi ./statusio_metrics_updater example_subscriber_list.txt
 ```

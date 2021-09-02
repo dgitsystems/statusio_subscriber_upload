@@ -1,0 +1,3 @@
+foo@example.com
+bar@example.org
+baz@example.net
