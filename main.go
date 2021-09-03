@@ -37,9 +37,13 @@ func main() {
 	}
 
 	// Check for filename being given on command line
-	// TODO
-
-	fileName := "example_subscriber_list.txt"
+	if len(os.Args) == 1 {
+		log.Fatal("No filename for subscribers list given on the command line")
+	}
+	if len(os.Args) > 2 {
+		log.Fatal("Too many command line parameters given.  This program only accepts a single parameter, the filename of the subscribers list to add")
+	}
+	fileName := os.Args[1]
 
 	// Ensure file is present and readable
 	info, err := os.Stat(fileName)
@@ -81,6 +85,7 @@ func main() {
 		for _, sub := range subList.Result.Email {
 			fmt.Println(sub.Address)
 		}
+		fmt.Println()
 	}
 
 	// Remove any existing subscribers from the list of people to add
@@ -88,6 +93,10 @@ func main() {
 		if _, ok := addList[email.Address]; ok {
 			delete(addList, email.Address)
 		}
+	}
+
+	if DEBUG {
+		fmt.Println("Adding new subscribers...")
 	}
 
 	// Add the new subscribers
@@ -101,6 +110,8 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+
+		fmt.Printf("%v successfully subscribed\n", email)
 
 		// Ensure there is at least a 1 second pause between subscriber add calls, so we don't hit rate limits
 		// This is what the status.io docs say to do (really)
