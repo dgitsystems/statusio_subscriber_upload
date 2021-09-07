@@ -1,2 +1,4 @@
 github.com/statusio/statusio-go v0.0.0-20210702141555-ecf7ebd4ae6b h1:uGMn9LGGlNa8xBee3vHisvtcW5NLXQhxEbS0xRxM+lo=
 github.com/statusio/statusio-go v0.0.0-20210702141555-ecf7ebd4ae6b/go.mod h1:0mbzCKdjf1ylcjRHJnmsvbds/sYwhiA6oyI/czRuenY=
+github.com/statusio/statusio-go v0.0.0-20210906172313-c6d8c265a0f0 h1:XlPBEfHFDSiFDwp9f43qsF/euD1YJtIU+U/A3Cbnc8w=
+github.com/statusio/statusio-go v0.0.0-20210906172313-c6d8c265a0f0/go.mod h1:0mbzCKdjf1ylcjRHJnmsvbds/sYwhiA6oyI/czRuenY=
