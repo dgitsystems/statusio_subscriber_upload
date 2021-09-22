@@ -105,6 +105,7 @@ func main() {
 			StatuspageID: statusPageId,
 			Method:       "email",
 			Address:      email,
+			Silent:       "1",
 		}
 		_, err := api.SubscriberAdd(addInfo)
 		if err != nil {
